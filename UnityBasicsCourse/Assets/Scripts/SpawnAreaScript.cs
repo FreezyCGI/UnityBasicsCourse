@@ -32,6 +32,12 @@ public class SpawnAreaScript : MonoBehaviour
         shootingObject.transform.position = transform.position;
         shootingObject.transform.position += new Vector3(Random.Range(-spawnArea.x, spawnArea.x), Random.Range(-spawnArea.y, spawnArea.y), 0);
         shootingObject.transform.parent = gameObject.transform;
+        shootingObject.GetComponent<ShootingObjectScript>().SpawnAreaScript = this;
         spawnedShootingObjects.Add(shootingObject);
+    }
+
+    public void RemoveShootingObjectFromList(GameObject shootingObject)
+    {
+        spawnedShootingObjects.Remove(shootingObject);
     }
 }
