@@ -10,10 +10,14 @@ public class PlayerScript : MonoBehaviour
 
     public GameObject mainCamera;
 
+    public GameObject bulletPrefab;
+    public float bulletSpeed = 1;
+
     // Start is called before the first frame update
     void Start()
     {
         mainCamera.transform.rotation = Quaternion.identity;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -38,5 +42,17 @@ public class PlayerScript : MonoBehaviour
         {
             mainCamera.transform.rotation = Quaternion.Euler(280, mainCamera.transform.rotation.y, mainCamera.transform.rotation.z);
         }
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            Shoot();
+        }
+    }
+
+    void Shoot()
+    {
+        GameObject bullet = GameObject.Instantiate(bulletPrefab);
+        bullet.transform.position = mainCamera.transform.position;
+        bullet.GetComponent<Rigidbody>().AddForce(mainCamera.transform.forward * bulletSpeed);
     }
 }
