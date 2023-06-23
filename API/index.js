@@ -23,12 +23,20 @@ app.get('/highscore/:username', async (req, res) => {
         'where username = $1'
         , [username]);
 
-    res.send(result.rows);
+        if(result.rowCount <= 0)
+        {
+            res.status(404).send();
+            return;
+        }
+
+
+    res.send(result.rows[0]);
 })
 
 app.post('/highscore', async (req, res) => {
 
-    let highscore = req.body.highscore;
+    console.log(req.body)
+    let highscore = req.body;
 
     if(!highscore)
     {

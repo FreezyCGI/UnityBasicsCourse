@@ -12,7 +12,8 @@ public class UIScript : MonoBehaviour
 
     private void Start()
     {
-        instance = this;   
+        instance = this;
+        SetTxtCounterNumber(Highscore.Instance.points);
     }
 
     public void SetTxtCounterNumber(int counter)

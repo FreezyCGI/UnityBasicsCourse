@@ -11,7 +11,13 @@ public class ShootingObjectScript : MonoBehaviour
     {
         SpawnAreaScript.RemoveShootingObjectFromList(gameObject);
         timesHit++;
-        UIScript.instance.SetTxtCounterNumber(timesHit);
-        Destroy(gameObject);
+       
+        HighScoreService highScoreService = new HighScoreService();
+        Highscore.Instance.points++;
+        UIScript.instance.SetTxtCounterNumber(Highscore.Instance.points);
+
+        highScoreService.Post(Highscore.Instance);
+
+        Destroy(gameObject);    
     }
 }
