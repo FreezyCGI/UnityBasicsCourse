@@ -62,9 +62,22 @@ namespace UnityBasicsCourseAPI.Controllers
         }
 
         // PUT api/<HighscoreController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{username}")]
+        public async Task PutAsync(string username, [FromBody] Highscore highscore)
         {
+            NpgsqlConnection conn = DataSource.OpenConnection();
+
+            await using (var cmd = new NpgsqlCommand(
+                "INSERT INTO Highscore (username, points) " +
+                "VALUES((@username), (@points)) " +
+                "ON CONFLICT (username) " +
+                "DO " +
+                "UPDATE SET points = (@points);", conn))
+            {
+                cmd.Parameters.AddWithValue("@username", highscore.Username);
+                cmd.Parameters.AddWithValue("@points", highscore.Points);
+                await cmd.ExecuteNonQueryAsync();
+            }
         }
 
         // DELETE api/<HighscoreController>/5

@@ -11,13 +11,13 @@ using UnityEngine.Networking;
 public class HighScoreService
 {
 
-    public void Post(Highscore highscore)
+    public void Put(Highscore highscore)
     {
         string myJson = JsonUtility.ToJson(highscore);
         Debug.Log(highscore.Username);
         using (var client = new HttpClient())
         {
-            var response = client.PostAsync(
+            var response = client.PutAsync(
                 "http://localhost:3000/highscore",
                  new StringContent(myJson, Encoding.UTF8, "application/json"));
         }

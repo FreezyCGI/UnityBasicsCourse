@@ -19,7 +19,7 @@ public class ShootingObjectScript : MonoBehaviour
         HighScoreService highScoreService = new();
         highscore.Points++;       
 
-        highScoreService.Post(highscore);
+        highScoreService.Put(highscore);
 
         Destroy(gameObject);    
     }
