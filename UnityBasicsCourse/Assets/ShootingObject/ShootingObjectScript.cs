@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class ShootingObjectScript : MonoBehaviour
@@ -18,8 +19,11 @@ public class ShootingObjectScript : MonoBehaviour
         SpawnAreaScript.RemoveShootingObjectFromList(gameObject);
        
         highscoreService.Points++;
-        highscoreService.PutAsync();
-
+        Task.Run(() =>
+        {
+            highscoreService.PutAsync();
+        });
+      
         Destroy(gameObject);    
     }
 }

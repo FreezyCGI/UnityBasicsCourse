@@ -40,14 +40,13 @@ public class HighScoreService : MonoBehaviour
     public async Task PutAsync()
     {
         string myJson = JsonUtility.ToJson(Highscore);
-        Debug.Log(Highscore.username);
-        Debug.Log(Highscore.points);
+        Debug.Log($"PutAsync(): username: {Highscore.username}");
+        Debug.Log($"PutAsync(): points: {Highscore.points}");
 
         HttpClient client = new();
         HttpRequestMessage requestMessage = new(HttpMethod.Put, "http://localhost:3000/Highscore/{Highscore.username}");
         requestMessage.Content = new StringContent(myJson, Encoding.UTF8, "application/json");
         HttpResponseMessage response = await client.SendAsync(requestMessage);
-        Debug.Log(response.Content.ToString());
 
         //using var client = new HttpClient();
         //client.Content = new ByteArrayContent(content);
