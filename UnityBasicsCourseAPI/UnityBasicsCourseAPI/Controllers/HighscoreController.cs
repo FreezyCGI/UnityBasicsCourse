@@ -5,7 +5,7 @@ using Npgsql;
 
 namespace UnityBasicsCourseAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class HighscoreController : ControllerBase
     {

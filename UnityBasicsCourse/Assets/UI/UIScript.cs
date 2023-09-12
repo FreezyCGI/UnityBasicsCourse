@@ -6,14 +6,13 @@ using UnityEngine.UI;
 public class UIScript : MonoBehaviour
 { 
     public Text txtCounter;
-    private Highscore highscore;
+    private HighScoreService highscoreService;
 
     private void Start()
     {
-        highscore = FindObjectOfType<Highscore>();
-        highscore.pointsChangedEvent += Highscore_pointsChangedEvent;
-
-        SetTxtCounterNumber(highscore.Points);
+        highscoreService = FindObjectOfType<HighScoreService>();
+        highscoreService.pointsChangedEvent += Highscore_pointsChangedEvent;
+        SetTxtCounterNumber(highscoreService.Points);
     }
     private void Highscore_pointsChangedEvent(int points)
     {
