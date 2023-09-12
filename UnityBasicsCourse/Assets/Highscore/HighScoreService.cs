@@ -14,7 +14,7 @@ public class HighScoreService
     public void Post(Highscore highscore)
     {
         string myJson = JsonUtility.ToJson(highscore);
-        Debug.Log(highscore.username);
+        Debug.Log(highscore.Username);
         using (var client = new HttpClient())
         {
             var response = client.PostAsync(
@@ -29,7 +29,7 @@ public class HighScoreService
         yield return www.SendWebRequest();
 
         Highscore highscore = new Highscore();
-        highscore.username = username;
+        highscore.Username = username;
 
         if (www.result != UnityWebRequest.Result.Success)
         {
@@ -38,7 +38,7 @@ public class HighScoreService
         else
         {
             highscore = JsonUtility.FromJson<Highscore>(www.downloadHandler.text);
-            highscore.username = username;
+            highscore.Username = username;
         }
         OnFinish(highscore);
     }

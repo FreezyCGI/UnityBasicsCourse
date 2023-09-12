@@ -6,18 +6,20 @@ public class PlayerScript : MonoBehaviour
 {
     public float movementSpeed = 0.1f;
     public float mouseXSpeed = 10;
-    public float mouseYSpeed = 10;
 
-    public GameObject mainCamera;
+    public float jumpHeight = 10;
 
     public GameObject bulletPrefab;
     public float bulletSpeed = 1;
 
+    public GameObject mainCamera;
+
+    private Rigidbody Rigidbody { get; set; }
+
     // Start is called before the first frame update
     void Start()
-    {
-        mainCamera.transform.rotation = Quaternion.identity;
-        Cursor.lockState = CursorLockMode.Locked;
+    {    
+        Rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -26,26 +28,20 @@ public class PlayerScript : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
         float horizontalMouseInput = Input.GetAxis("Mouse X");
-        float verticalMouseInput = Input.GetAxis("Mouse Y");
-
+       
         transform.position += transform.forward * verticalInput * movementSpeed * Time.deltaTime;
         transform.position += transform.right * horizontalInput * movementSpeed * Time.deltaTime;
 
-        transform.Rotate(0, horizontalMouseInput * mouseXSpeed * Time.deltaTime, 0);
-        mainCamera.transform.Rotate(-verticalMouseInput * mouseYSpeed * Time.deltaTime, 0, 0);
+        transform.Rotate(0, horizontalMouseInput * mouseXSpeed * Time.deltaTime * 60, 0);
 
-        if(mainCamera.transform.rotation.eulerAngles.x > 80 && mainCamera.transform.rotation.eulerAngles.x < 160)
-        {
-            mainCamera.transform.rotation = Quaternion.Euler(80, mainCamera.transform.rotation.y, mainCamera.transform.rotation.z);
-        }
-        if (mainCamera.transform.rotation.eulerAngles.x >= 160 && mainCamera.transform.rotation.eulerAngles.x < 280)
-        {
-            mainCamera.transform.rotation = Quaternion.Euler(280, mainCamera.transform.rotation.y, mainCamera.transform.rotation.z);
-        }
-
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Shoot();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Rigidbody.AddForce(Vector3.up * jumpHeight);
         }
     }
 

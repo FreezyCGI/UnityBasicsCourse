@@ -5,18 +5,21 @@ using UnityEngine;
 public class ShootingObjectScript : MonoBehaviour
 {
     public SpawnAreaScript SpawnAreaScript;
-    public static int timesHit = 0;
+    private Highscore highscore;
+
+    private void Start()
+    {
+        highscore = FindObjectOfType<Highscore>();
+    }
 
     public void Destroy()
     {
         SpawnAreaScript.RemoveShootingObjectFromList(gameObject);
-        timesHit++;
        
-        HighScoreService highScoreService = new HighScoreService();
-        Highscore.Instance.points++;
-        UIScript.instance.SetTxtCounterNumber(Highscore.Instance.points);
+        HighScoreService highScoreService = new();
+        highscore.Points++;       
 
-        highScoreService.Post(Highscore.Instance);
+        highScoreService.Post(highscore);
 
         Destroy(gameObject);    
     }

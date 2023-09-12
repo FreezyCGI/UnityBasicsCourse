@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class MainMenuScript : MonoBehaviour
 {
     public InputField inputUsername;
+    public Highscore highscore;
 
     public void StartGame()
     {
@@ -15,7 +16,8 @@ public class MainMenuScript : MonoBehaviour
         HighScoreService highScoreService = new HighScoreService();
         StartCoroutine(highScoreService.Get(username, (highscore) =>
         {
-            Highscore.Instance = highscore;
+            this.highscore.Points = highscore.Points;
+            this.highscore.Username = highscore.Username;
             SceneManager.LoadScene("ShootingRange");
         }));
     }
